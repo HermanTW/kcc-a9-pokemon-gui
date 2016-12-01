@@ -6,7 +6,7 @@ In this assignment we are going to try to pull together much of what you have wo
 
 The task is to build a Graphical User Interface (GUI) for your Pokemon species heirarchy that works somewhat like Pokemon Go without the GPS. 
 
-You are encouraged to get creative with this! Make your application look nice! Some extra credit is given defined, but adding other functionality will get additional points. 
+You are encouraged to get creative with this. Make your application look nice! Some extra credit is defined, but adding other functionality will get additional points. 
 
 *Some of you may know how to make better GUIs than others. If you have GUI experience and want to, go ahead and make something nicer than is described below. Just make sure it still performs the same tasks.*
 
