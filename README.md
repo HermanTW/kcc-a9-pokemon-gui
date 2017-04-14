@@ -1,6 +1,6 @@
-# Assignment5-PokeGUI
+# Assignment 9 - PokeGUI
 
-## Due Monday Dec 12, 9:45 am  (end of ICS 211 final period)
+## Due Tuesday May 9 
 ----
 In this assignment we are going to try to pull together much of what you have worked on all semester into a nice pretty package. 
 
@@ -47,11 +47,11 @@ Here there should be:
   * Number
   * Recent
   
-When the user clicks the "Pokedex" button, the TextArea should display the output of printPokeTree from Assignment 4. 
+When the user clicks the "Pokedex" button, the TextArea should display the output of printPokeTree from Assignment 7. 
 
 When the user clicks the "Backpack" button, the TextArea should display a list of all Pokemon that have been caught, ordered by whatever Choice is selected.
- * The stack from Assignment 3 holds the Pokemons in the "Recent" order
- * The PriorityQueue from Assignment 3 holds them in "Number" order
+ * The stack from Assignment 6 holds the Pokemons in the "Recent" order
+ * The PriorityQueue from Assignment 6 holds them in "Number" order
  
 ### Extra Credit Sorting - 50 points
 Add three more Choices to the pop-up menu for sorting order:
