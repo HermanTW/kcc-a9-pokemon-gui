@@ -1,6 +1,6 @@
 # Assignment 9 - PokeGUI
-
-## Due Tuesday May 9 
+## 100 Points
+## Due Monday 12/11 (Final Exam day) 
 ----
 In this assignment we are going to try to pull together much of what you have worked on all semester into a nice pretty package. 
 
@@ -64,3 +64,27 @@ Add three more Choices to the pop-up menu for sorting order:
    * Alternatively you could just do the sorts as needed.
    * You may make your own sorting methods, or use the Java List sort method with a Comparator
     * See this reference for how to use a Comparator: https://examples.javacodegeeks.com/core-java/util/comparator/java-comparator-example/
+
+## Grading Rubric
+ 
+### Top Section -  /50 points
+
+- [ ] A TextField or TextArea big enough display one Pokemon's toString output.
+- [ ] A button titled "Hunt"
+- [ ] A button titled "Catch"
+
+Click the "Hunt" button:
+- [ ] Randomly selects one species of Pokemon and create it.
+- [ ] The TextField  displays "A Bulbasaur appeared!" (or whatever species was selected)
+ 
+Click the "Catch" button:
+- [ ] Random Pokemon catching.
+- [ ] If the Pokemon caught, the text field displays something like "Caught: " + ```<Pokemon>.toString()``` If not the TextField  displays: "```<Pokemon>``` escaped"
+
+### Bottom Section - /50 points
+- [ ] A TextArea for displaying a list of Pokemon
+- [ ] A button titled "Pokedex"  displays the output of printPokeTree
+- [ ] A button titled "Backpack" displays a list of all Pokemon that have been caught, ordered by whatever Choice is selected.
+- [ ] A Choice pop-up menu for the sorting order with the following choices:Number Recent
+
+### Extra Credit
