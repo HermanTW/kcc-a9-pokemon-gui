@@ -1,6 +1,6 @@
 # Assignment 9 - PokeGUI
 ## 100 Points
-## Due Monday 12/11 (Final Exam day) 
+## Due Tuesday May, 8 (Final Exam day) 
 ----
 
 
@@ -45,7 +45,7 @@ The user will then need to click the "Catch" button.
 This part of the program will use data structures you have already implemented to store Pokemon as they are caught in the upper section. 
 
 Here there should be:
- * A TextArea for displaying a list of Pokemon
+ * A scrollable TextArea for displaying a list of Pokemon
  * A button titled "Pokedex"
  * A button titled "Backpack"
  * A Choice pop-up menu for the sorting order with the following choices:
@@ -57,6 +57,7 @@ When the user clicks the "Pokedex" button, the TextArea should display the outpu
 When the user clicks the "Backpack" button, the TextArea should display a list of all Pokemon that have been caught, ordered by whatever Choice is selected.
  * The stack from Assignment 6 holds the Pokemons in the "Recent" order
  * The PriorityQueue from Assignment 6 holds them in "Number" order
+  - Make sure you fill the Stack and PriorityQueue back up after display if they are emptied to display the sorted list.
  
 ### Extra Credit Sorting - 50 points
 Add three more Choices to the pop-up menu for sorting order:
