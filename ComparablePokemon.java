@@ -19,50 +19,9 @@ public class ComparablePokemon {
      */
    public static void main(String[] args) {
       PriorityQueue<Pokemon> pQ = new PriorityQueue<>();
-      Deque<Pokemon> pS = new ArrayDeque<Pokemon>();
+      Deque<Pokemon> pS = new ArrayDeque<>();
       Pokemon poke = new Bulbasaur();
-      
-      pQ.add(poke);
-      pS.push(poke);
-      poke = new Bulbasaur("Al");
-      pQ.add(poke);
-      pS.push(poke);
-      poke = new Bulbasaur("Bob");
-      pQ.add(poke);
-      pS.push(poke);
-      poke = new Bulbasaur("Charlie");
-      pQ.add(poke);
-      pS.push(poke);
-      for (int i = 0; i < 10; i++) { //adds 10 of each pokemon to pQ and pS
-         poke = new Bulbasaur();
-         pQ.add(poke);
-         pS.push(poke);
-         poke = new Ivysaur();
-         pQ.add(poke);
-         pS.push(poke);
-         poke = new Venusaur();
-         pQ.add(poke);
-         pS.push(poke);
-         poke = new Charmander();
-         pQ.add(poke);
-         pS.push(poke);
-         poke = new Charmeleon();
-         pQ.add(poke);
-         pS.push(poke);
-         poke = new Charizard();
-         pQ.add(poke);
-         pS.push(poke);
-         poke = new Squirtle();
-         pQ.add(poke);
-         pS.push(poke);
-         poke = new Wartortle();
-         pQ.add(poke);
-         pS.push(poke);
-         poke = new Blastoise();
-         pQ.add(poke);
-         pS.push(poke);
-      }     
-            
+                  
       System.out.println("\nHere is the Priority Queue printout:\n");
 
       while (pQ.size() > 0) {
@@ -75,8 +34,31 @@ public class ComparablePokemon {
       while (pS.size() > 0) {
          poke = pS.pop();
          System.out.println(poke.toString() + "\n");
-      }
-
-      
+      }    
    }
+   
+   public String stackString() {
+      Deque<Pokemon> mirror = new ArrayDeque<Pokemon>();
+      while (pS.size() > 0) {
+         poke = pS.pop();
+         System.out.println(poke.toString() + "\n");
+         mirror.push(poke);
+      }
+      while (pS.size() > 0) {
+         pS.push(mirror.pop());
+      }
+   
+   public String queueString() {
+      PriorityQueue<Pokemon> temp = new PriorityQueue<>();
+      
+      while (pQ.size() > 0) {
+         poke = pQ.poll();
+         System.out.println(poke.toString() + "\n");
+         temp.add(poke);
+      }
+      pQ = temp;
+   }
+   
+   
+   
 }

@@ -332,9 +332,7 @@ public abstract class Pokemon implements Comparable <Pokemon> {
    */  
    
    public boolean equals(Pokemon that) {
-      return (this.number == that.number && this.name == that.name
-         && this.hP == that.hP && this.fastAttack == that.fastAttack
-         && this.cP == that.cP && this.specialAttack == that.specialAttack);
+      return (this.number == that.number);
    }
    
    /**
@@ -344,28 +342,12 @@ public abstract class Pokemon implements Comparable <Pokemon> {
    */
    
    public int compareTo(Pokemon that) {
-      String name1 = this.name.toLowerCase();
-      String name2 = that.getName().toLowerCase();
       if (this.equals(that)) {
          return 0;
       } else if (this.number > that.getNumber()) {
          return 1;
-      } else if (this.number < that.getNumber()) {
-         return -1;
-      } else if (name1.compareTo(name2) > 0) {
-         return 1;
-      } else if (name1.compareTo(name2) < 0) {
-         return -1;
-      } else if (this.hP > that.getHP()) {
-         return 1;
-      } else if (this.hP < that.getHP()) {
-         return -1;
-      } else if (this.cP > that.getCP()) {
-         return 1;
-      } else if (this.cP < that.getCP()) {
-         return -1;
       } else {
-         return 1;
-      }
+         return -1;
+      } 
    }
 }

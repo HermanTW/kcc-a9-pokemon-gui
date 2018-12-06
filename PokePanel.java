@@ -30,13 +30,17 @@ public class PokePanel extends JPanel {
    private JPanel topPanel = new JPanel();
    private JPanel topSubPanel = new JPanel();
    private JPanel midPanel = new JPanel();
+   private JPanel midSubPanel = new JPanel();
    private JPanel botPanel = new JPanel();
+   private JPanel botSubPanel = new JPanel();
    
    //private PokeListener listener = new PokeListener();
    
-   private JTextArea taZone = new JTextArea();
-   private JTextArea taPack = new JTextArea();
-   private JTextArea taDex = new JTextArea();
+   private JTextArea taZone = new JTextArea("No Pokemon in sight. . .");
+   private JTextArea taPack = new JTextArea(20, 10);
+   private JTextArea taDex = new JTextArea(20, 10);
+       
+   Choice ch = new Choice( );   
        
    JTabbedPane menuPane = new JTabbedPane();
    
@@ -57,34 +61,53 @@ public class PokePanel extends JPanel {
    
    public PokePanel() {
       setLayout(new BorderLayout());
-      setPreferredSize(new Dimension(600, 800));
-
+      setPreferredSize(new Dimension(600, 1000));
+    
+      topPanel.setLayout(new BorderLayout());
+      topPanel.setPreferredSize(new Dimension(600, 400));
+      topSubPanel.setLayout(new BorderLayout());
+      topSubPanel.setPreferredSize(new Dimension(200, 200));
+      midPanel.setLayout(new BorderLayout());
+      midPanel.setPreferredSize(new Dimension(200, 200));
+      midSubPanel.setLayout(new BorderLayout());
+      midSubPanel.setPreferredSize(new Dimension(200, 200));
+      botPanel.setLayout(new BorderLayout());
+      botPanel.setPreferredSize(new Dimension(600, 400));
+      botSubPanel.setLayout(new BorderLayout());
+      botSubPanel.setPreferredSize(new Dimension(200, 200));
+      
       taZone.setEditable(false);
       taPack.setEditable(false);
       taDex.setEditable(false);
      
-      topPanel.add(title);
+      topPanel.add(title, "North");
       topPanel.setBackground(Color.green);
      
       taZone.setText("No Pokemon in sight. . .");  
-      topSubPanel.add(taZone);
-      topPanel.add(topSubPanel);
-      midPanel.add(bHunt);
-      midPanel.add(bCatch);
-      botPanel.add(bDex);
-      botPanel.add(bPack);
+      topPanel.add(taZone, "North");
+      topSubPanel.add(bHunt, "West");
+      topSubPanel.add(bCatch, "East");
+      topPanel.add(topSubPanel, "South");
+      
+      midPanel.add(bDex, "West");
+      midPanel.add(bPack, "East");
+      
+      ch.add("Recent");
+      ch.add("Number");
+      botPanel.add(ch, "North");
+      
       bHunt.addActionListener(new PokeListener());
       bCatch.addActionListener(new PokeListener());
       bPack.addActionListener(new PokeListener());
       bDex.addActionListener(new PokeListener());
-      
+                  
       menuPane.addTab("Pokedex", null, scrollDex, "Selects Pokedex");
       menuPane.addTab("Backpack", null, scrollPack, "Selects Backpack");
-      botPanel.add(menuPane);
+      botPanel.add(menuPane, "South");
       
-      add("North", topPanel);
-      add("Center", midPanel);
-      add("South", botPanel);
+      add(topPanel, "North");
+      add(midPanel, "Center");
+      add(botPanel, "South");
       
 
    }
@@ -110,18 +133,22 @@ public class PokePanel extends JPanel {
          taZone.setText(output);
       }
       if (event.getSource() == bCatch) {
-         catcher = randGen.nextInt(10);
-         if (catcher >= 5) {
-            output = poke.getName() + " has been captured!\n\n"
-               + poke.toString();
-            pS.push(poke);
-            pQ.add(poke);
-            pokeDex.add(poke);
-            poke = null;
+         if (poke == null) {
+            output = "No Pokemon around to catch!";
          } else {
-            output = poke.getName() + " has escaped!\n\n"
-               + poke.toString();
-            poke = null;
+            catcher = randGen.nextInt(10);
+            if (catcher > 2) {
+               output = poke.getName() + " has been captured!\n\n"
+                  + poke.toString();
+               pS.push(poke);
+               pQ.add(poke);
+               pokeDex.add(poke);
+               poke = null;
+            } else {
+               output = poke.getName() + " has escaped!\n\n"
+                  + poke.toString();
+               poke = null;
+            }
          }
          taZone.setText(output); 
       }
@@ -129,7 +156,11 @@ public class PokePanel extends JPanel {
          taDex.setText(pokeDex.printPokeTree());
       }
       if (event.getSource() == bPack) {
-         taPack.setText(stackString());
+         if (ch.getSelectedItem() == "Recent") {
+            taPack.setText(stackString());
+         } else {
+            taPack.setText(queueString());
+         }
       }     
                  
    }
@@ -195,12 +226,14 @@ public class PokePanel extends JPanel {
    
    public String queueString() {
       String queueOutput = "";
-      
-      for (int j = 0; j < pQ.size(); j++) {
+      PriorityQueue<Pokemon> temp = new PriorityQueue<>();
+
+      while (pQ.size() > 0) {
          poke = pQ.poll();
          queueOutput += poke.toString() + "\n\n";
-         pQ.add(poke);
+         temp.add(poke);
       }
+      pQ = temp;
       return queueOutput;
    }
 
