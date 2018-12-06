@@ -1,3 +1,4 @@
+import java.util.*;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
@@ -16,10 +17,15 @@ public class PokePanel extends JPanel {
    ImageIcon dexIcon = new ImageIcon("Pokedex.png");
    ImageIcon packIcon = new ImageIcon("backpack.png");
    ImageIcon pixelIcon = new ImageIcon("pixel.png");
-      
+   
+   private Pokemon poke = null;
+   
+   PriorityQueue<Pokemon> pQ = new PriorityQueue<>();
+   Deque<Pokemon> pS = new ArrayDeque<>();
+   PokeTree pokeDex = new PokeTree(); 
    
    private JLabel title = new JLabel("Safari Zone");
-   private JLabel safari = new JLabel("No Pokemon in sight");
+   //private JLabel safari = new JLabel("No Pokemon in sight");
    
    private JPanel topPanel = new JPanel();
    private JPanel topSubPanel = new JPanel();
@@ -28,16 +34,16 @@ public class PokePanel extends JPanel {
    
    //private PokeListener listener = new PokeListener();
    
-   private JTextField tfZone = new JTextField(10);
-   private JTextField tfBox = new JTextField(10);
-   private JTextField tfDex = new JTextField(10);
-    
+   private JTextArea taZone = new JTextArea();
+   private JTextArea taPack = new JTextArea();
+   private JTextArea taDex = new JTextArea();
+       
    JTabbedPane menuPane = new JTabbedPane();
    
-   private JScrollPane scrollDex = new JScrollPane(tfDex, 
+   private JScrollPane scrollDex = new JScrollPane(taDex, 
        JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, 
        JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS); 
-   private JScrollPane scrollBox = new JScrollPane(tfBox, 
+   private JScrollPane scrollPack = new JScrollPane(taPack, 
        JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, 
        JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS); 
    
@@ -46,31 +52,39 @@ public class PokePanel extends JPanel {
    private JButton bDex = new JButton(" Pokedex ", dexIcon);
    private JButton bPack = new JButton(" Backpack ", packIcon);
    private PokeListener listener = new PokeListener();
-   //bHunt.addActonListener(new PokeListener());
-   //bCatch.addActionListener(new PokeListener());
+   
    
    
    public PokePanel() {
       setLayout(new BorderLayout());
-      setPreferredSize(new Dimension(800, 1000));
+      setPreferredSize(new Dimension(600, 800));
 
+      taZone.setEditable(false);
+      taPack.setEditable(false);
+      taDex.setEditable(false);
+     
       topPanel.add(title);
       topPanel.setBackground(Color.green);
      
-      topSubPanel.add(safari);
+      taZone.setText("No Pokemon in sight. . .");  
+      topSubPanel.add(taZone);
       topPanel.add(topSubPanel);
       midPanel.add(bHunt);
       midPanel.add(bCatch);
-      midPanel.add(bDex);
-      midPanel.add(bPack);
+      botPanel.add(bDex);
+      botPanel.add(bPack);
+      bHunt.addActionListener(new PokeListener());
+      bCatch.addActionListener(new PokeListener());
+      bPack.addActionListener(new PokeListener());
+      bDex.addActionListener(new PokeListener());
       
-      menuPane.addTab("Pokedex", pixelIcon, scrollDex, "Selects Pokedex");
-      menuPane.addTab("Backpack", pixelIcon, scrollBox, "Selects Backpack");
+      menuPane.addTab("Pokedex", null, scrollDex, "Selects Pokedex");
+      menuPane.addTab("Backpack", null, scrollPack, "Selects Backpack");
       botPanel.add(menuPane);
       
       add("North", topPanel);
       add("Center", midPanel);
-      add("South", menuPane);
+      add("South", botPanel);
       
 
    }
@@ -86,18 +100,36 @@ public class PokePanel extends JPanel {
    * @param event what button is clicked.
    */ 
    public void actionPerformed(ActionEvent event) {
-      
       Random randGen = new Random();
       int catcher = 0;
       String output = "";
       if (event.getSource() == bHunt) { 
-         Pokemon poke = hunt();
-         output = "A wild Pokemon has appeared!\n\n"
+         poke = hunt();
+         output = poke.getName() + " has appeared!\n\n"
             + poke.toString();
-         tfZone.setText(output);
+         taZone.setText(output);
       }
       if (event.getSource() == bCatch) {
-         
+         catcher = randGen.nextInt(10);
+         if (catcher >= 5) {
+            output = poke.getName() + " has been captured!\n\n"
+               + poke.toString();
+            pS.push(poke);
+            pQ.add(poke);
+            pokeDex.add(poke);
+            poke = null;
+         } else {
+            output = poke.getName() + " has escaped!\n\n"
+               + poke.toString();
+            poke = null;
+         }
+         taZone.setText(output); 
+      }
+      if (event.getSource() == bDex) {
+         taDex.setText(pokeDex.printPokeTree());
+      }
+      if (event.getSource() == bPack) {
+         taPack.setText(stackString());
       }     
                  
    }
@@ -106,46 +138,71 @@ public class PokePanel extends JPanel {
    * Hunt method.
    * Returns random Pokemon
    *
-   * @return wild randomly selected Pokemon
+   * @return poke randomly selected Pokemon
    */
    public Pokemon hunt() {
       Random randGen = new Random();
       int num = randGen.nextInt(9) + 1;
-      Pokemon wild = new Bulbasaur();
       switch(num) {
          case 1:
-            wild = new Bulbasaur();
+            poke = new Bulbasaur();
             break;
          case 2:
-            wild = new Ivysaur();
+            poke = new Ivysaur();
             break;
          case 3:
-            wild = new Venusaur();
+            poke = new Venusaur();
             break;
          case 4:
-            wild = new Charmander();
+            poke = new Charmander();
             break;
          case 5:
-            wild = new Charmeleon();
+            poke = new Charmeleon();
             break;
          case 6:
-            wild = new Charizard();
+            poke = new Charizard();
             break;
          case 7:
-            wild = new Squirtle();
+            poke = new Squirtle();
             break;
          case 8:
-            wild = new Wartortle();
+            poke = new Wartortle();
             break;
          case 9:
-            wild = new Blastoise();
+            poke = new Blastoise();
             break;
          default:
-            wild = new Bulbasaur();
+            poke = new Bulbasaur();
             break;
          }
-         return wild;
+         return poke;
       }
    }
+   
+   public String stackString() {
+      String stackOutput = "";
+      Deque<Pokemon> mirror = new ArrayDeque<Pokemon>();
+      while (pS.size() > 0) {
+         poke = pS.pop();
+         stackOutput += poke.toString() + "\n\n";
+         mirror.push(poke);
+      }
+      while (mirror.size() > 0) {
+         pS.push(mirror.pop());
+      }
+      return stackOutput;
+   }
+   
+   public String queueString() {
+      String queueOutput = "";
+      
+      for (int j = 0; j < pQ.size(); j++) {
+         poke = pQ.poll();
+         queueOutput += poke.toString() + "\n\n";
+         pQ.add(poke);
+      }
+      return queueOutput;
+   }
+
 }
              
