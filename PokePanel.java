@@ -57,24 +57,27 @@ public class PokePanel extends JPanel {
    private JButton bPack = new JButton(" Backpack ", packIcon);
    private PokeListener listener = new PokeListener();
    
-   
+ /**
+   * PokePanel method.
+   * Main panel of PokeGUI
+   */  
    
    public PokePanel() {
       setLayout(new BorderLayout());
-      setPreferredSize(new Dimension(600, 1000));
+      setPreferredSize(new Dimension(300, 800));
     
       topPanel.setLayout(new BorderLayout());
-      topPanel.setPreferredSize(new Dimension(600, 400));
+      topPanel.setPreferredSize(new Dimension(400, 300));
       topSubPanel.setLayout(new BorderLayout());
-      topSubPanel.setPreferredSize(new Dimension(200, 200));
+      topSubPanel.setPreferredSize(new Dimension(100, 100));
       midPanel.setLayout(new BorderLayout());
-      midPanel.setPreferredSize(new Dimension(200, 200));
+      midPanel.setPreferredSize(new Dimension(10, 10));
       midSubPanel.setLayout(new BorderLayout());
-      midSubPanel.setPreferredSize(new Dimension(200, 200));
+      midSubPanel.setPreferredSize(new Dimension(5, 5));
       botPanel.setLayout(new BorderLayout());
-      botPanel.setPreferredSize(new Dimension(600, 400));
+      botPanel.setPreferredSize(new Dimension(400, 440));
       botSubPanel.setLayout(new BorderLayout());
-      botSubPanel.setPreferredSize(new Dimension(200, 200));
+      botSubPanel.setPreferredSize(new Dimension(100, 100));
       
       taZone.setEditable(false);
       taPack.setEditable(false);
@@ -84,14 +87,15 @@ public class PokePanel extends JPanel {
       topPanel.setBackground(Color.green);
      
       taZone.setText("No Pokemon in sight. . .");  
-      topPanel.add(taZone, "North");
+      topPanel.add(taZone, "Center");
       topSubPanel.add(bHunt, "West");
       topSubPanel.add(bCatch, "East");
       topPanel.add(topSubPanel, "South");
       
       midPanel.add(bDex, "West");
       midPanel.add(bPack, "East");
-      
+      midPanel.setBackground(Color.red);
+
       ch.add("Recent");
       ch.add("Number");
       botPanel.add(ch, "North");
@@ -104,7 +108,8 @@ public class PokePanel extends JPanel {
       menuPane.addTab("Pokedex", null, scrollDex, "Selects Pokedex");
       menuPane.addTab("Backpack", null, scrollPack, "Selects Backpack");
       botPanel.add(menuPane, "South");
-      
+      botPanel.setBackground(Color.blue);
+
       add(topPanel, "North");
       add(midPanel, "Center");
       add(botPanel, "South");
@@ -210,6 +215,12 @@ public class PokePanel extends JPanel {
       }
    }
    
+ /**
+   * Stack print method.
+   * returns string of all data in stack
+   *
+   * @return stackOutput String of all data in stack
+   */  
    public String stackString() {
       String stackOutput = "";
       Deque<Pokemon> mirror = new ArrayDeque<Pokemon>();
@@ -224,6 +235,11 @@ public class PokePanel extends JPanel {
       return stackOutput;
    }
    
+ /**  
+   * Queue print method.
+   * 
+   * @return queueString String of all data in queue
+   */
    public String queueString() {
       String queueOutput = "";
       PriorityQueue<Pokemon> temp = new PriorityQueue<>();
